@@ -1,20 +1,22 @@
 # Development Dockerfile for Medusa
-FROM node:20-alpine
+FROM node:18-alpine
 
-# Set working directory
-WORKDIR /server
+# Install build tools needed for native modules
+RUN apk add --no-cache python3 make g++ libc6-compat
 
-# Copy package files and yarn config
+# Enable Corepack so Yarn 4 (defined in packageManager field) is used
+RUN corepack enable && corepack prepare yarn@4.4.0 --activate
+
+WORKDIR /app
+
 COPY package.json yarn.lock .yarnrc.yml ./
 
-# Install all dependencies using yarn
-RUN yarn install
+RUN yarn install --immutable
 
-# Copy source code
 COPY . .
 
-# Expose the port Medusa runs on
+RUN yarn build
+
 EXPOSE 9000
 
-# Start with migrations and then the development server
-CMD ["./start.sh"]
+CMD ["sh", "-c", "yarn medusa db:migrate && yarn start"]
