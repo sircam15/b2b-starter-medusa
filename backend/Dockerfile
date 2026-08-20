@@ -1,12 +1,10 @@
 FROM node:20-alpine
 
-ARG CACHEBUST=1
-
 RUN apk add --no-cache python3 make g++ libc6-compat
 
 RUN corepack enable && corepack prepare yarn@4.4.0 --activate
 
-WORKDIR /app
+WORKDIR /medusa
 
 COPY package.json yarn.lock .yarnrc.yml ./
 
