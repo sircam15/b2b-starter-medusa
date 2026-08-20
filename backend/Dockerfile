@@ -1,5 +1,7 @@
 FROM node:20-alpine
 
+ARG CACHEBUST=1
+
 RUN apk add --no-cache python3 make g++ libc6-compat
 
 RUN corepack enable && corepack prepare yarn@4.4.0 --activate
@@ -12,7 +14,7 @@ RUN yarn install --no-immutable
 
 COPY . .
 
-RUN yarn build
+RUN NODE_OPTIONS=--max-old-space-size=2048 yarn build
 
 EXPOSE 9000
 
