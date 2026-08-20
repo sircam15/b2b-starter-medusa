@@ -12,7 +12,7 @@ RUN yarn install --no-immutable
 
 COPY . .
 
-RUN yarn build
+RUN yarn medusa build
 
 EXPOSE 9000
 
