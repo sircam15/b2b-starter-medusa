@@ -1,4 +1,4 @@
-FROM node:18-alpine
+FROM node:20-alpine
 
 RUN apk add --no-cache python3 make g++ libc6-compat
 
@@ -12,7 +12,7 @@ RUN yarn install --no-immutable
 
 COPY . .
 
-RUN yarn medusa build
+RUN yarn build
 
 EXPOSE 9000
 
