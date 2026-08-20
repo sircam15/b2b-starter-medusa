@@ -9,10 +9,7 @@ RUN corepack enable && corepack prepare yarn@4.4.0 --activate
 
 WORKDIR /app
 
-COPY package.json yarn.lock .yarnrc.yml turbo.json ./
-COPY .yarn/releases .yarn/releases
-COPY apps/backend/package.json ./apps/backend/
-COPY apps/storefront/package.json ./apps/storefront/
+COPY package.json yarn.lock .yarnrc.yml ./
 
 RUN yarn install --no-immutable
 
